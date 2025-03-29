@@ -11,8 +11,12 @@ use App\Http\Controllers\UserContainer;
 use App\Services\TaskService;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['name' => 'Yap-app']);
 });
+
+Route::get('/users', [UserController::class, 'index']);
+
+Route::resource('products', ProductController::class);
 
 //Service Container
 Route::get('/test-container', function (Request $request) {
@@ -78,11 +82,11 @@ Route::post('/token', function (Request $request) {
     return $request->all();
 });
 
-//Controller -> Middleware
-Route::get('/users', [UserController::class, 'index'])->middleware('usermiddleware');
+// //Controller -> Middleware
+// Route::get('/users', [UserController::class, 'index'])->middleware('usermiddleware');
 
-//Resource
-Route::resource('products', ProductController::class);
+// //Resource
+// Route::resource('products', ProductController::class);
 
 //View with data
 Route::get('/product-list', function (ProductService $productService) {

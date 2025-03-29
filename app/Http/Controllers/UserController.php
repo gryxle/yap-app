@@ -1,27 +1,25 @@
 <?php
 
-namespace App\Services; // Capital 'S' in Services
+namespace App\Http\Controllers;
 
-class UserService 
+use App\Services\UserService;
+use Illuminate\Http\Request;
+
+use function Laravel\Prompts\warning;
+
+class UserController extends Controller
 {
-    protected $users;
-
-    public function __construct($users = [])
-    {
-        $this->users = $users;
+    //
+    public function index(UserService $userService){
+        return view('users.index', ['users' => $userService->listUsers()]);
     }
 
-    public function listUsers()
-    {
-        return $this->users;
-    }
-
-    public function first(UserService $userService) {
+    public function first(UserService $userService){
         return collect($userService->listUsers())->first();
     }
 
-    public function show(UserService $userService, $id) {
-        $user = collect($userService->listUsers())->filter(function ($item) use ($id) {
+    public function show(UserService $userService, $id){
+        $user = collect($userService->listUsers())->filter(function($item) use ($id){
             return $item['id'] == $id;
         })->first();
 
